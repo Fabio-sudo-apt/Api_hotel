@@ -6,8 +6,8 @@ class FindAllReservationController {
   constructor(private readonly findAllResevation: FindAllReservation) {}
   async findAll(req: Request, res: Response) {
     try {
-      const data = req.body;
-      const result = await this.findAllResevation.handle(data);
+      const {limit, skip} = req.headers;
+      const result = await this.findAllResevation.handle({limit, skip});
       res.status(200).json(result);
     } catch (error) {
       processError(res, error);

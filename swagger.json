@@ -1,0 +1,701 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Api Hotel",
+    "description": "Aplicação de gerenciamento de Hóspedes de um Hotel X e suas reservas.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/guests": {
+      "get": {
+        "tags": ["Hóspede"],
+        "description": "Encontrar todas as Hóspede",
+        "parameters": [
+          {
+            "name": "limit",
+            "description": "Numero limite de Hóspede",
+            "in": "header",
+            "example": "10"
+          },
+          {
+            "name": "skip",
+            "description": "Numero da pagina",
+            "in": "header",
+            "example": "0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hóspedes encontrados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "guests": {
+                      "items": {
+                        "$ref": "#/components/schemas/responsesGuest"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/guestfind/{id}": {
+      "get": {
+        "tags": ["Hóspede"],
+        "description": "Encontrar Hóspede pelo seu id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Hóspede"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hóspede encontrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/responsesGuest"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/guestcreate": {
+      "post": {
+        "tags": ["Hóspede"],
+        "description": "Criar um Hóspede",
+        "requestBody": {
+          "description": "Dados para criar um Hóspede",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/requestGuest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hóspede criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Hospede cadastrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/guestupdate": {
+      "put": {
+        "tags": ["Hóspede"],
+        "description": "Atualizar Hóspede",
+        "requestBody": {
+          "description": "Dados para atualiza um Hóspede",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/responsesGuest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hóspede atualizado com Sucesso​",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "successful upgrade"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/guestdelete/{id}": {
+      "delete": {
+        "tags": ["Hóspede"],
+        "description": "Deleta Hóspede pelo seu id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Hóspede"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hóspede encontrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "delete done successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/reservations": {
+      "get": {
+        "tags": ["Reserva"],
+        "description": "Encontrar todas as reservas",
+        "parameters": [
+          {
+            "name": "limit",
+            "description": "Numero limite de reservas",
+            "in": "header",
+            "example": "10"
+          },
+          {
+            "name": "skip",
+            "description": "Numero da pagina",
+            "in": "header",
+            "example": "0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reservas encontrados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "guests": {
+                      "items": {
+                        "$ref": "#/components/schemas/responseReservation"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Ainda nao tem reservas cadastradas"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservationguestbyid/{id}": {
+      "get": {
+        "tags": ["Reserva"],
+        "description": "Encontrar reservas com id do hóspede",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Hóspede"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hóspede encontrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "resevars": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/responseReservation"
+                      }
+                    },
+                    "count": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservationcreate": {
+      "post": {
+        "tags": ["Reserva"],
+        "description": "Criar uma reserva",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/requestReservation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reserva criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/responseReservation"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservationstatus": {
+      "put": {
+        "tags": ["Reserva"],
+        "description": "Atualizacao de status da reserva",
+        "requestBody": {
+          "description": "Dados para atualiza o status da reserva",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/requestStatus"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Status da Reservas atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Atualização feita com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "Erro": {
+                      "type": "string",
+                      "example": "Problema com servido"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservationupdate": {
+      "put": {
+        "tags": ["Reserva"],
+        "description": "Atualizar reserva",
+        "requestBody": {
+          "description": "Dados para atualiza a reserva",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/responseReservation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reserva atualizado com Sucesso​",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Atualização feita com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reservationdelete/{id}": {
+      "delete": {
+        "tags": ["Reserva"],
+        "description": "Deleta Reserva pelo seu id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID do Reserva"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reserva delete com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "delete done successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problema com servido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error500"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "responsesGuest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID do Hóspede",
+            "format": "XXXXXX",
+            "example": "5da454f4307b0a8b30838839"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome da Hóspede"
+          },
+          "email": {
+            "type": "string",
+            "description": "E-mail da Hóspede"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Data de Aniversário do Hóspede"
+          },
+          "telephone": {
+            "type": "string",
+            "description": "Telefone do Hóspede"
+          },
+          "city": {
+            "type": "string",
+            "description": "Cidade do Hóspede"
+          },
+          "state": {
+            "type": "string",
+            "description": "Estado do Hóspede"
+          },
+          "country": {
+            "type": "string",
+            "description": "Pais do Hóspede"
+          }
+        }
+      },
+      "requestGuest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nome da Hóspede",
+            "example": "exemplo"
+          },
+          "email": {
+            "type": "string",
+            "description": "E-mail da Hóspede",
+            "example": "exemplo@gmail.com"
+          },
+          "birthday": {
+            "type": "string",
+            "description": "Data de Aniversário do Hóspede",
+            "example": "2022-12-04"
+          },
+          "telephone": {
+            "type": "string",
+            "description": "Telefone do Hóspede",
+            "example": "99204724"
+          },
+          "city": {
+            "type": "string",
+            "description": "Cidade do Hóspede",
+            "example": "Ico"
+          },
+          "state": {
+            "type": "string",
+            "description": "Estado do Hóspede",
+            "example": "CE"
+          },
+          "country": {
+            "type": "string",
+            "description": "Pais do Hóspede",
+            "example": "Brasil"
+          }
+        }
+      },
+      "requestStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID do Hóspede",
+            "format": "XXXXXX",
+            "example": "5da454f4307b0a8b30838839"
+          },
+          "status": {
+            "type": "string",
+            "example": "check-in,"
+          }
+        }
+      },
+      "responseReservation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID do reserva",
+            "format": "XXXXXX",
+            "example": "5da454f4307b0a8b30838839"
+          },
+          "hotel_name": {
+            "type": "string",
+            "example": "hotel X",
+            "description": "Nome do Hotel"
+          },
+          "room_number": {
+            "type": "number",
+            "example": 30,
+            "description": "Número do Quarto"
+          },
+          "reservation_amount": {
+            "type": "number",
+            "example": 120,
+            "description": "Valor da reserva"
+          },
+          "date_booking_made": {
+            "type": "string",
+            "example": "2022-09-19 12:58",
+            "description": "Data da reserva efetuada"
+          },
+          "start_date_reservation": {
+            "type": "string",
+            "example": "2022-09-30 12:58",
+            "description": "Data Inicial que a pessoa reservou o hotel"
+          },
+          "end_date_reservation": {
+            "type": "string",
+            "example": "2022-09-30 12:58",
+            "description": "Data final que a pessoa reservou o hotel"
+          },
+          "reservation_status": {
+            "type": "string",
+            "example": "confirmada",
+            "description": "Status da reserva"
+          },
+          "guest_id": {
+            "type": "string",
+            "description": "ID do Hospede",
+            "format": "XXXXXX",
+            "example": "5da454f4307b0a8b30838839"
+          }
+        }
+      },
+      "requestReservation": {
+        "type": "object",
+        "properties": {
+          "hotel_name": {
+            "type": "string",
+            "example": "hotel X",
+            "description": "Nome do Hotel"
+          },
+          "room_number": {
+            "type": "number",
+            "example": 30,
+            "description": "Número do Quarto"
+          },
+          "reservation_amount": {
+            "type": "number",
+            "example": 120,
+            "description": "Valor da reserva"
+          },
+          "date_booking_made": {
+            "type": "string",
+            "example": "2022-09-19 12:58",
+            "description": "Data da reserva efetuada"
+          },
+          "start_date_reservation": {
+            "type": "string",
+            "example": "2022-09-30 12:58",
+            "description": "Data Inicial que a pessoa reservou o hotel"
+          },
+          "end_date_reservation": {
+            "type": "string",
+            "example": "2022-09-30 12:58",
+            "description": "Data final que a pessoa reservou o hotel"
+          },
+          "reservation_status": {
+            "type": "string",
+            "example": "confirmada",
+            "description": "Status da reserva"
+          },
+          "guest_id": {
+            "type": "string",
+            "description": "ID do Hospede",
+            "format": "XXXXXX",
+            "example": "5da454f4307b0a8b30838839"
+          }
+        }
+      },
+      "Error500": {
+        "properties": {
+          "Error": {
+            "type": "string",
+            "example": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}

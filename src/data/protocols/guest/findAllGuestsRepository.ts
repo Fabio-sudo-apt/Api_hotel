@@ -1,8 +1,8 @@
 import Guest from "../../../entity/Guest";
 
 export interface IfindAllGuestsParams {
-  limit: number;
-  skip: number;
+  limit?: string | string[];
+  skip?: string | string[];
 }
 
 export interface IfindAllGuestsResult {

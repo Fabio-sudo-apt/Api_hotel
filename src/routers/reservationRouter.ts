@@ -12,23 +12,23 @@ reservation.get("/reservations", (req, res) =>
   findAllReservationFactory.findAll(req, res)
 );
 
-reservation.get("/reservation/:id", (req, res) =>
+reservation.get("/reservationguestbyid/:id", (req, res) =>
   findAllResevarsGuestByid.findAll(req, res)
 );
 
-reservation.post("/reservation", (req, res) =>
+reservation.post("/reservationcreate", (req, res) =>
   createReservation.create(req, res)
 );
 
-reservation.put("/statusReservation", (req, res) =>
+reservation.put("/reservationstatus", (req, res) =>
   updateStatusReservation.updateStatus(req, res)
 );
 
-reservation.put("/reservation", (req, res) =>
+reservation.put("/reservationupdate", (req, res) =>
   updateReservationFactory.update(req, res)
 );
 
-reservation.delete("/reservation/:id", (req, res) =>
+reservation.delete("/reservationdelete/:id", (req, res) =>
   deleteResevarsFactory.delete(req, res)
 );
 
