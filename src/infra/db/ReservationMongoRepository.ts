@@ -111,9 +111,10 @@ class ReservationMongoRepository
   ): Promise<IfindAllReservationResult> {
     const reservationRepository = dataSource.getMongoRepository(Reservation);
     const result = await reservationRepository.findAndCount({
-      take: data.limit,
-      skip: data.skip,
+      take: Number(data.limit),
+      skip: Number(data.skip),
     });
+    if(result[1] == 0) throw new Error("Ainda nao tem reservas cadastradas")
     return {
       reservations: result[0],
       count: result[1],

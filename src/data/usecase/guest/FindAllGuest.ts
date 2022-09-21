@@ -5,8 +5,8 @@ import {
 import * as Yup from "yup";
 
 const validetionData = Yup.object().shape({
-  limit: Yup.number().required("Limite e obrigatório"),
-  skip: Yup.number().required("pagina e obrigatório"),
+  limit: Yup.string(),
+  skip: Yup.string(),
 });
 
 class FindAllGuest {

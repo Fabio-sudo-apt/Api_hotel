@@ -6,8 +6,8 @@ import {
 import * as Yup from "yup";
 
 const validation = Yup.object().shape({
-  limit: Yup.number().required("Limite e obrigatório"),
-  skip: Yup.number().required("pagina e obrigatório"),
+  limit: Yup.string(),
+  skip: Yup.string()
 } as Record<keyof IfindAllReservationParams, any>);
 
 class FindAllReservation {

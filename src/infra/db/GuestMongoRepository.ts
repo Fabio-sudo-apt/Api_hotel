@@ -61,8 +61,8 @@ export class GuestMongoRepository
   async findAll(data: IfindAllGuestsParams): Promise<IfindAllGuestsResult> {
     const guestRepository = dataSource.getMongoRepository(Guest);
     const guests = await guestRepository.find({
-      take: data.limit,
-      skip: data.skip,
+      take: Number(data.limit),
+      skip: Number(data.skip),
     });
     return { guests: guests };
   }

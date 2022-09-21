@@ -1,8 +1,8 @@
 import Reservation from "../../../entity/Reservation";
 
 export interface IfindAllReservationParams {
-  limit?: number;
-  skip?: number;
+  limit?: string | string[];
+  skip?: string | string[];
 }
 
 export interface IfindAllReservationResult{
