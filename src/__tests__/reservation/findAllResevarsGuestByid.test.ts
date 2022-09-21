@@ -9,9 +9,9 @@ describe("Find All Resevars Guest By id", () => {
     const endsAt = new Date();
     endsAt.setDate(endsAt.getDate() + 5);
     await createReservationTest(startsAt, endsAt, response.data.id);
-    const { status } = await api.get(`/reservation/${response.data.id}`);
+    const { status } = await api.get(`/reservationguestbyid/${response.data.id}`);
     expect(status).toBe(200);
-    await api.delete(`/guest/${response.data.id}`);
+    await api.delete(`/guestdelete/${response.data.id}`);
   });
 
   it("Should not be able to find with incorrect guest_id", async () => {
@@ -22,15 +22,15 @@ describe("Find All Resevars Guest By id", () => {
     await createReservationTest(startsAt, endsAt, response.data.id);
     expect(async () => {
       await api.get(
-        `/reservation/${response.data.id}${Math.floor(Math.random() * 9)}`
+        `/reservationguestbyid/${response.data.id}${Math.floor(Math.random() * 9)}`
       );
     }).rejects.toThrowError();
-    await api.delete(`/guest/${response.data.id}`);
+    await api.delete(`/guestdelete/${response.data.id}`);
   });
 
   it("Should not be able to find with empty guest_id", async () => {
     expect(async () => {
-      await api.get(`/reservation`);
+      await api.get(`/reservationguestbyid`);
     }).rejects.toThrowError();
   });
 });

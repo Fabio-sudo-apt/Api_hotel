@@ -9,7 +9,7 @@ describe("Update Reservation", () => {
     const startsAt = new Date();
     const endsAt = new Date();
     endsAt.setDate(endsAt.getDate() + 5);
-    const { data, status } = await createReservationTest(
+    const { data } = await createReservationTest(
       startsAt,
       endsAt,
       response.data.id
@@ -18,12 +18,12 @@ describe("Update Reservation", () => {
       ...data,
       hotel_name: "Hotel Z",
     };
-    const update = await api.put("/reservation", doc);
+    const update = await api.put("/reservationupdate", doc);
     expect(update.status).toBe(200);
     expect(update.data).toEqual({
       message: "Atualização feita com sucesso",
     });
-    await api.delete(`/guest/${response.data.id}`);
+    await api.delete(`/guestdelete/${response.data.id}`);
   });
 
   it("Should not be able to update a reservation with a guest id that does not exist", async () => {
@@ -42,11 +42,11 @@ describe("Update Reservation", () => {
       hotel_name: "Hotel Z",
     };
     expect(async () => {
-      await api.put("/reservation", doc);
+      await api.put("/reservationupdate", doc);
     }).rejects.toThrowError();
-    await api.delete(`/guest/${response.data.id}`);
+    await api.delete(`/guestdelete/${response.data.id}`);
   });
-  
+
   it("Should not be able to update a reservation with id that does not exist", async () => {
     const response = await createGuestTest();
     const startsAt = new Date();
@@ -63,8 +63,8 @@ describe("Update Reservation", () => {
       hotel_name: "Hotel Z",
     };
     expect(async () => {
-      await api.put("/reservation", doc);
+      await api.put("/reservationupdate", doc);
     }).rejects.toThrowError();
-    await api.delete(`/guest/${response.data.id}`);
+    await api.delete(`/guestdelete/${response.data.id}`);
   });
 });
