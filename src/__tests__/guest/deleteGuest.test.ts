@@ -4,7 +4,7 @@ import createGuestTest from "../../utils/createGuestTest";
 describe("Delete Guest", () => {
   it("successfully deleted", async () => {
     const { data } = await createGuestTest();
-    const t = await api.delete(`/guest/${data.id}`);
+    const t = await api.delete(`/guestdelete/${data.id}`);
     expect(t.status).toBe(200);
   });
 
@@ -18,9 +18,9 @@ describe("Delete Guest", () => {
     const response = await createGuestTest();
     expect(async () => {
       await api.delete(
-        `/guest/${response.data.id}${Math.floor(Math.random() * 10)}`
+        `/guestdelete/${response.data.id}${Math.floor(Math.random() * 10)}`
       );
     }).rejects.toThrowError();
-    await api.delete(`/guest/${response.data.id}`);
+    await api.delete(`/guestdelete/${response.data.id}`);
   });
 });

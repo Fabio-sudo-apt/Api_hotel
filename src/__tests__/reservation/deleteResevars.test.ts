@@ -13,8 +13,8 @@ describe("Delete Resevartion", () => {
       endsAt,
       response.data.id
     );
-    const deleted = await api.delete(`/reservation/${data.id}`);
+    const deleted = await api.delete(`/reservationdelete/${data.id}`);
     expect(deleted.status).toBe(200);
-    await api.delete(`/guest/${response.data.id}`);
+    await api.delete(`/guestdelete/${response.data.id}`);
   });
 });

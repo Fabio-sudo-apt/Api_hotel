@@ -1,4 +1,3 @@
-import { rejects } from "assert";
 import api from "../../utils/createAxios";
 import createGuestTest from "../../utils/createGuestTest";
 
@@ -7,18 +6,18 @@ describe("Create Guest", () => {
     const { data, status } = await createGuestTest();
     expect(data).toBeInstanceOf(Object);
     expect(status).toBe(201);
-    await api.delete(`/guest/${{ data }.data.id}`);
+    await api.delete(`/guestdelete/${{ data }.data.id}`);
   });
 
   it("Should not be able create guest with null data", async () => {
     await expect(async () => {
-      await api.post("/guest", null);
+      await api.post("/guestcreate", null);
     }).rejects.toThrowError();
   });
 
   it("Should not be able create guest with undefined data", async () => {
     await expect(async () => {
-      await api.post("/guest", {});
+      await api.post("/guestcreate", {});
     }).rejects.toThrowError();
   });
 
@@ -49,6 +48,6 @@ describe("Create Guest", () => {
         country: data.country,
       });
     }).rejects.toThrowError();
-    await api.delete(`/guest/${data.id}`);
+    await api.delete(`/guestdelete/${data.id}`);
   });
 });

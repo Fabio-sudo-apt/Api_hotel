@@ -4,7 +4,7 @@ import createGuestTest from "../../utils/createGuestTest";
 describe("Update Guest", () => {
   it("successfully", async () => {
     const { data } = await createGuestTest();
-    const { status } = await api.put("/guest", {
+    const { status } = await api.put("/guestupdate", {
       id: data.id,
       name: `${data.name}${Math.floor(Math.random() * 10)}`,
       email: data.email,
@@ -15,12 +15,12 @@ describe("Update Guest", () => {
       country: data.country,
     });
     expect(status).toBe(200);
-    await api.delete(`/guest/${data.id}`);
+    await api.delete(`/guestdelete/${data.id}`);
   });
 
   it("Should not be able to update with empty data", async () => {
     await expect(async () => {
-      await api.put("/guest", {});
+      await api.put("/guestupdate", {});
     }).rejects.toThrowError();
   });
 });

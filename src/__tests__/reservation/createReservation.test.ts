@@ -15,7 +15,7 @@ describe("create reservation", () => {
     );
     expect(status).toBe(201);
     expect(data).toBeInstanceOf(Object);
-    await api.delete(`/guest/${response.data.id}`);
+    await api.delete(`/guestdelete/${response.data.id}`);
   });
 
   it("Should not be able to create reservation with empty guest_id", async () => {
@@ -29,13 +29,13 @@ describe("create reservation", () => {
 
   it("Should not be able create reservation with undefined data", async () => {
     await expect(async () => {
-      await api.post("/reservation", {});
+      await api.post("/reservationcreate", {});
     }).rejects.toThrowError();
   });
 
   it("Should not be able create reservation with null data", async () => {
     await expect(async () => {
-      await api.post("/reservation", null);
+      await api.post("/reservationcreate", null);
     }).rejects.toThrowError();
   });
 
@@ -48,6 +48,6 @@ describe("create reservation", () => {
       await createReservationTest(startsAt, endsAt, data.id);
     }).rejects.toThrowError();
 
-    await api.delete(`/guest/${data.id}`);
+    await api.delete(`/guestdelete/${data.id}`);
   });
 });

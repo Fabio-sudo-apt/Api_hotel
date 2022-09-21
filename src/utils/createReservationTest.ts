@@ -10,7 +10,7 @@ const createReservationTest = async (startsAt: Date, endsAt: Date, guest_id?: st
     end_date_reservation: endsAt,
   };
 
-  const response = await api.post("/reservation", doc);
+  const response = await api.post("/reservationcreate", doc);
   return response;
 };
 

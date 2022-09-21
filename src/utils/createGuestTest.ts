@@ -3,7 +3,7 @@ import api from "./createAxios";
 
 const createGuestTest = async (data?: IcreateGuestParams) => {
   const response = await api.post(
-    "/guest",
+    "/guestcreate",
     data == undefined
       ? {
           name: "adm",
